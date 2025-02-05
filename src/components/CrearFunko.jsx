@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { crearFunko } from '../utils/api';
+import '../styles/crearFunko.css';
 
 const CrearFunko = () => {
   const [funko, setFunko] = useState({
@@ -38,25 +39,35 @@ const CrearFunko = () => {
     }
   };
   return (
-    <div>
+    <div className='crear-funko-container'>
       <h2>Crear Funko</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Nombre:</label>
-        <input type="text" name="nombre" value={funko.nombre} onChange={handleChange} required />
+      <form className='crear-funko-form' onSubmit={handleSubmit}>
+        <div className='form-group'>
+          <label>Nombre:</label>
+          <input type="text" name="nombre" value={funko.nombre} onChange={handleChange} required />
+        </div>
 
+        <div className='form-group'>
         <label>Descripción:</label>
         <textarea name="descripción" value={funko.descripción} onChange={handleChange} required />
+        </div>
 
-        <label>¿Brilla en la oscuridad?</label>
-        <input type="checkbox" name="is_backlight" checked={funko.is_backlight} onChange={handleChange} />
-
+        <div className='form-group'>
         <label>Stock:</label>
         <input type="number" name="stock" value={funko.stock} onChange={handleChange} required />
+        </div>
 
+        <div className='form-group'>
         <label>Precio:</label>
         <input type="number" name="precio" value={funko.precio} onChange={handleChange} required />
+        </div>
 
-        <button type="submit">Crear Funko</button>
+        <div className='form-group'>
+        <label>Brilla en la oscuridad</label>
+        <input type="checkbox" name="is_backlight" checked={funko.is_backlight} onChange={handleChange} />
+        </div>
+
+        <button className='btn-crear' type="submit">Crear</button>
       </form>
     </div>
   );
