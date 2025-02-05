@@ -1,0 +1,127 @@
+.listar-funkos {
+    max-width: 1000px;
+    width: 90%;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 160px;
+}
+
+.input-busqueda {
+    display: flex;
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
+    margin-left: 0;
+}
+
+.listar-funkos h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.tabla-funkos {
+    width: 100%;
+    border-collapse: collapse;
+    /* Bordes colapsados para un diseño limpio */
+    margin-top: 20px;
+    /* Espacio entre el título y la tabla */
+}
+
+.tabla-funkos thead {
+    background-color: #41575F;
+    color: white;
+}
+
+.tabla-funkos th,
+.tabla-funkos td {
+    padding: 15px 20px;
+    /* Espaciado interno */
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    /* Línea divisoria entre filas */
+}
+
+.tabla-funkos th {
+    font-weight: bold;
+    font-size: 16px;
+    /* Tamaño de fuente más grande para los encabezados */
+}
+
+.tabla-funkos tbody tr:hover {
+    background-color: #f9f9f9;
+    /* Fondo suave al pasar el mouse */
+    transition: background-color 0.3s ease;
+}
+
+.tabla-funkos td {
+    color: #555;
+    font-size: 14px;
+    /* Tamaño de fuente para las celdas */
+}
+
+.tabla-funkos td:nth-child(2) {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.tabla-funkos td:nth-child(4) {
+    text-transform: capitalize;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .listar-funkos {
+        width: 95%;
+        /* Más ancho en pantallas pequeñas */
+        padding: 10px;
+    }
+
+    .tabla-funkos {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .tabla-funkos thead,
+    .tabla-funkos tbody,
+    .tabla-funkos th,
+    .tabla-funkos td,
+    .tabla-funkos tr {
+        display: block;
+    }
+
+    .tabla-funkos thead {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .tabla-funkos tbody tr {
+        margin-bottom: 10px;
+        /* Espacio entre filas en móviles */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .tabla-funkos td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    .tabla-funkos td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        text-align: left;
+        font-weight: bold;
+        color: #333;
+    }
+}

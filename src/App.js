@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import CrearFunko from './components/CrearFunko';
 import Sidebar from './components/Sidebar';
+import CrearFunko from './components/CrearFunko';
+import ListarFunkos from './components/ListarFunkos';
 import './App.css';
 
 
@@ -12,6 +13,7 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/crear-funko" element={<CrearFunko />} />
+            <Route path="/listar-funkos" element={<ListarFunkos />} />
           </Routes>
         </div>
       </div>
