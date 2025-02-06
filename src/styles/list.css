@@ -1,0 +1,117 @@
+.listar {
+    max-width: 1000px;
+    width: 90%;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 160px;
+}
+
+.input-busqueda {
+    display: flex;
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
+    margin-left: 0;
+}
+
+.listar h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tabla thead {
+    background-color: #41575F;
+    color: white;
+}
+
+.tabla th,
+.tabla td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabla th {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.tabla tbody tr:hover {
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+}
+
+.tabla td {
+    color: #555;
+    font-size: 14px;
+}
+
+.tabla td:nth-child(2) {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.tabla td:nth-child(4) {
+    text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+    .listar {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .tabla {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .tabla thead,
+    .tabla tbody,
+    .tabla th,
+    .tabla td,
+    .tabla tr {
+        display: block;
+    }
+
+    .tabla thead {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .tabla tbody tr {
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .tabla td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    .tabla td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        text-align: left;
+        font-weight: bold;
+        color: #333;
+    }
+}
