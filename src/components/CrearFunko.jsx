@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { crearFunko } from '../utils/api';
-import '../styles/crearFunko.css';
+import '../styles/form.css';
 
 const CrearFunko = () => {
   const [funko, setFunko] = useState({
@@ -39,9 +39,9 @@ const CrearFunko = () => {
     }
   };
   return (
-    <div className='crear-funko-container'>
+    <div className='crear-container'>
       <h2>Crear Funko</h2>
-      <form className='crear-funko-form' onSubmit={handleSubmit}>
+      <form className='crear-form' onSubmit={handleSubmit}>
         <div className='form-group'>
           <label>Nombre:</label>
           <input type="text" name="nombre" value={funko.nombre} onChange={handleChange} required />

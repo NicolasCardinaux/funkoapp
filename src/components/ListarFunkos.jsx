@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { listarFunkos } from '../utils/api';
-import '../styles/listarFunkos.css';
+import '../styles/list.css';
 
 const ListarFunkos = () => {
   const [funkos, setFunkos] = useState([]);
@@ -32,7 +32,7 @@ const ListarFunkos = () => {
   );
 
   return (
-    <div className="listar-funkos">
+    <div className="listar">
       <h2>Listar Funkos</h2>
 
       <input
@@ -48,7 +48,7 @@ const ListarFunkos = () => {
       {funkos.length === 0 ? (
         <p>No hay funkos disponibles.</p>
       ) : (
-        <table className="tabla-funkos">
+        <table className="tabla">
           <thead>
             <tr>
               <th>Nombre</th>
