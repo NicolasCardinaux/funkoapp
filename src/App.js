@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar';
 import CrearFunko from './components/CrearFunko';
 import ListarFunkos from './components/ListarFunkos';
 import CrearCategoria from './components/CrearCategoria';
+import ListarCategorias from './components/ListarCategorias';
 import './App.css';
 
 
@@ -16,6 +17,7 @@ function App() {
             <Route path="/crear-funko" element={<CrearFunko />} />
             <Route path="/listar-funkos" element={<ListarFunkos />} />
             <Route path="/crear-categoria" element={<CrearCategoria />} />
+            <Route path="/listar-categorias" element={<ListarCategorias />} />
           </Routes>
         </div>
       </div>

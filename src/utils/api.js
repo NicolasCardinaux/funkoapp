@@ -65,3 +65,25 @@ export const crearCategoria = async (categoriaData, token) => {
     return { success: false, message: `Error en la solicitud: ${error.message}` };
   }
 };
+
+export const listarCategorias = async (token) => {
+  try {
+    const response = await fetch('https://practica-django-fxpz.onrender.com/categorias', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+      },
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      return { success: true, data };
+    } else {
+      const errorData = await response.json();
+      return { success: false, message: errorData.message };
+    }
+  } catch (error) {
+    return { success: false, message: `Error en la solicitud: ${error.message}` };
+  }
+};
