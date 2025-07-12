@@ -7,21 +7,25 @@ const ListarFunkos = () => {
   const [busqueda, setBusqueda] = useState("");
   const [error, setError] = useState(null);
 
-  const token = '073b5c9eaa1fbc7a8511ea67ecd44aac1a1ca432';
+  const token = "221a72f73c7aee1c4d00ea16ad712347a53260f1";
 
   useEffect(() => {
     const fetchFunkos = async () => {
-      const result = await listarFunkos(token);
+      try {
+        const result = await listarFunkos(token);
 
-      if (result.success) {
-        setFunkos(result.data[0]);
-      } else {
-        setError(result.message);
+        if (result.success) {
+          setFunkos(result.data.funkos);
+        } else {
+          setError(result.message || "Error al cargar funkos");
+        }
+      } catch (error) {
+        setError("Error de conexión: " + error.message);
       }
     };
-    
+
     fetchFunkos();
-  }, []);
+  }, []);;
 
   const handleBusqueda = (e) => {
     setBusqueda(e.target.value);
@@ -48,26 +52,28 @@ const ListarFunkos = () => {
       {funkos.length === 0 ? (
         <p>No hay funkos disponibles.</p>
       ) : (
-        <table className="tabla">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Precio</th>
-              <th>Stock</th>
-              <th>Brillante</th>
-            </tr>
-          </thead>
-          <tbody>
-            {funkosFiltrados.map((funko) => (
-              <tr key={funko.idFunko}>
-                <td>{funko.nombre}</td>
-                <td>${funko.precio.toFixed(2)}</td>
-                <td>{funko.stock}</td>
-                <td>{funko.is_backlight ? 'Sí' : 'No'}</td>
+        <div>
+          <table className="tabla">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Brillante</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {funkosFiltrados.map((funko) => (
+                <tr key={funko.idFunko}>
+                  <td>{funko.nombre}</td>
+                  <td>${funko.precio.toFixed(2)}</td>
+                  <td>{funko.stock}</td>
+                  <td>{funko.is_backlight ? 'Sí' : 'No'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
