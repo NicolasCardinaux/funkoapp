@@ -52,7 +52,7 @@ const ListarFunkos = () => {
       {funkos.length === 0 ? (
         <p>No hay funkos disponibles.</p>
       ) : (
-        <div>
+        <div className='tabla-container'>
           <table className="tabla">
             <thead>
               <tr>

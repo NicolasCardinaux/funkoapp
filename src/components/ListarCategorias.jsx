@@ -49,20 +49,22 @@ const ListarCategorias = () => {
             {categorias.length === 0 ? (
                 <p>No hay categorías disponibles.</p>
             ) : (
-                <table className="tabla">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {categoriasFiltradas.map((categoria) => (
-                            <tr key={categoria.idCategoria}>
-                                <td>{categoria.nombre}</td>
+                <div className='tabla-container'>
+                    <table className="tabla">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {categoriasFiltradas.map((categoria) => (
+                                <tr key={categoria.idCategoria}>
+                                    <td>{categoria.nombre}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );

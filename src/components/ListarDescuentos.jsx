@@ -48,20 +48,22 @@ const ListarDescuentos = () => {
             {descuentos.length === 0 ? (
                 <p>No hay descuentos disponibles.</p>
             ) : (
-                <table className='tabla'>
-                    <thead>
-                        <tr>
-                            <th>Porcentaje</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {descuentosFiltrados.map((descuento) => (
-                            <tr key={descuento.idDescuento}>
-                                <td>{descuento.porcentaje}</td>
+                <div className='tabla-container'>
+                    <table className='tabla'>
+                        <thead>
+                            <tr>
+                                <th>Porcentaje</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {descuentosFiltrados.map((descuento) => (
+                                <tr key={descuento.idDescuento}>
+                                    <td>{descuento.porcentaje}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );
