@@ -4,7 +4,7 @@ import "../styles/form.css";
 
 const CrearDescuento = () => {
     const [descuento, setDescuento] = useState({
-        codigo: "",
+        nombre: "",
         porcentaje: "",
     });
     
@@ -35,6 +35,10 @@ const CrearDescuento = () => {
         <div className='crear-container'>
             <h2>Crear Descuento</h2>
             <form className='crear-form' onSubmit={handleSubmit}>
+                <div className='form-group'>
+                    <label>Nombre:</label>
+                    <input type="text" name="nombre" value={descuento.nombre} onChange={handleChange} required />
+                </div>
                 <div className='form-group'>
                     <label>Porcentaje:</label>
                     <input type="number" name="porcentaje" value={descuento.porcentaje} onChange={handleChange} required />

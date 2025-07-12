@@ -48,23 +48,23 @@ const CrearFunko = () => {
         </div>
 
         <div className='form-group'>
-        <label>Descripción:</label>
-        <textarea name="descripción" value={funko.descripción} onChange={handleChange} required />
+          <label>Descripción:</label>
+          <textarea name="descripción" value={funko.descripción} onChange={handleChange} required />
         </div>
 
         <div className='form-group'>
-        <label>Stock:</label>
-        <input type="number" name="stock" value={funko.stock} onChange={handleChange} required />
+          <label>Stock:</label>
+          <input type="number" name="stock" value={funko.stock} onChange={handleChange} required />
         </div>
 
         <div className='form-group'>
-        <label>Precio:</label>
-        <input type="number" name="precio" value={funko.precio} onChange={handleChange} required />
+          <label>Precio:</label>
+          <input type="number" name="precio" value={funko.precio} onChange={handleChange} required />
         </div>
 
         <div className='form-group'>
-        <label>Brilla en la oscuridad</label>
-        <input type="checkbox" name="is_backlight" checked={funko.is_backlight} onChange={handleChange} />
+          <label>Brilla en la oscuridad</label>
+          <input type="checkbox" name="is_backlight" checked={funko.is_backlight} onChange={handleChange} />
         </div>
 
         <button className='btn-crear' type="submit">Crear</button>
