@@ -1,8 +1,15 @@
+body {
+    display: flex;
+    top: 0;
+    height: 100%;
+    margin-left: 20px;
+    padding: 0;
+}
+
 .listar {
-    max-width: 1000px;
-    width: 90%;
+    display: block;
+    width: 100%;
     padding: 20px;
-    text-align: center;
     margin-bottom: 160px;
 }
 
@@ -10,7 +17,7 @@
     display: flex;
     width: 91%;
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
@@ -20,14 +27,19 @@
 
 .listar h2 {
     color: #333;
+    text-align: left;
     margin-bottom: 20px;
     font-size: 24px;
+}
+
+.tabla-container {
+    display: flex;
+    position: absolute;
 }
 
 .tabla {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
 }
 
 .tabla thead {
@@ -73,7 +85,7 @@
     }
 
     .tabla {
-        display: block;
+        display: flex;
         overflow-x: auto;
     }
 
@@ -82,7 +94,7 @@
     .tabla th,
     .tabla td,
     .tabla tr {
-        display: block;
+        display: flex;
     }
 
     .tabla thead {
