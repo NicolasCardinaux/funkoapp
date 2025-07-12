@@ -11,7 +11,7 @@ const CrearFunko = () => {
     precio: 0,
   });
   
-  const token = '073b5c9eaa1fbc7a8511ea67ecd44aac1a1ca432';
+  const token = "221a72f73c7aee1c4d00ea16ad712347a53260f1";
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
