@@ -1,3 +1,8 @@
+body{
+    position: relative;
+    height: 100%;
+}
+
 .sidebar {
     width: 200px;
     background: white;
@@ -23,7 +28,7 @@
 
 .content {
     margin-left: 220px;
-    padding: 20px;
+    padding: 20px 20px 20px 200px;
 }
 
 .nav-link {
