@@ -7,11 +7,9 @@ const ListarDescuentos = () => {
     const [busqueda, setBusqueda] = useState('');
     const [error, setError] = useState(null);
 
-    const token = "221a72f73c7aee1c4d00ea16ad712347a53260f1";
-
     useEffect(() => {
         const fetchDescuentos = async () => {
-            const result = await listarDescuentos(token);
+            const result = await listarDescuentos();
 
             if (result.success) {
                 setDescuentos(result.data.Descuentos);

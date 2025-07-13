@@ -10,8 +10,6 @@ const CrearFunko = () => {
     stock: 0,
     precio: 0,
   });
-  
-  const token = "221a72f73c7aee1c4d00ea16ad712347a53260f1";
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -23,7 +21,7 @@ const CrearFunko = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await crearFunko(funko, token);
+    const result = await crearFunko(funko);
 
     if (result.success) {
       alert("Funko creado exitosamente!");

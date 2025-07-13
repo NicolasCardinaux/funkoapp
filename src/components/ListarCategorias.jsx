@@ -7,12 +7,10 @@ const ListarCategorias = () => {
     const [categorias, setCategorias] = useState([]);
     const [busqueda, setBusqueda] = useState("");
     const [error, setError] = useState(null);
-    
-    const token = "221a72f73c7aee1c4d00ea16ad712347a53260f1";
 
     useEffect(() => {
         const fetchCategorias = async () => {
-            const result = await listarCategorias(token);
+            const result = await listarCategorias();
 
             if (result.success) {
                 setCategorias(result.data.Categorias);

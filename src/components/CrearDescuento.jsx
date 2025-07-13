@@ -7,8 +7,6 @@ const CrearDescuento = () => {
         nombre: "",
         porcentaje: "",
     });
-    
-    const token = "221a72f73c7aee1c4d00ea16ad712347a53260f1";
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -20,7 +18,7 @@ const CrearDescuento = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const result = await crearDescuento(descuento, token);
+        const result = await crearDescuento(descuento);
 
         if (result.success) {
             alert("Descuento creado exitosamente!");

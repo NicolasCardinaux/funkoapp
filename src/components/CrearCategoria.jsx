@@ -7,8 +7,6 @@ const CrearCategoria = () => {
     nombre: "",
   });
 
-    const token = "221a72f73c7aee1c4d00ea16ad712347a53260f1";
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCategoria({
@@ -19,7 +17,7 @@ const CrearCategoria = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const result = await crearCategoria(categoria, token);
+        const result = await crearCategoria(categoria);
 
         if (result.success) {
             alert("Categoría creada exitosamente!");

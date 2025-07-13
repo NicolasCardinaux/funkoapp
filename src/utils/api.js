@@ -1,10 +1,13 @@
-export const crearFunko = async (funkoData, token) => {
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const API_TOKEN = process.env.REACT_APP_API_TOKEN;
+
+export const crearFunko = async (funkoData) => {
   try {
-    const response = await fetch('https://practica-django-fxpz.onrender.com/funkos', {
+    const response = await fetch(`${BASE_URL}/funkos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`,
+        'Authorization': `Token ${API_TOKEN}`,
       },
       body: JSON.stringify(funkoData),
     });
@@ -21,13 +24,13 @@ export const crearFunko = async (funkoData, token) => {
   }
 };
 
-export const listarFunkos = async (token) => {
+export const listarFunkos = async () => {
   try {
-    const response = await fetch('https://practica-django-fxpz.onrender.com/funkos', {
+    const response = await fetch(`${BASE_URL}/funkos`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`,
+        'Authorization': `Token ${API_TOKEN}`,
       },
     });
 
@@ -43,13 +46,13 @@ export const listarFunkos = async (token) => {
   }
 };
 
-export const crearCategoria = async (categoriaData, token) => {
+export const crearCategoria = async (categoriaData) => {
   try {
-    const response = await fetch('https://practica-django-fxpz.onrender.com/categorias', {
+    const response = await fetch(`${BASE_URL}/categorias`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`,
+        'Authorization': `Token ${API_TOKEN}`,
       },
       body: JSON.stringify(categoriaData),
     });
@@ -66,13 +69,13 @@ export const crearCategoria = async (categoriaData, token) => {
   }
 };
 
-export const listarCategorias = async (token) => {
+export const listarCategorias = async () => {
   try {
-    const response = await fetch('https://practica-django-fxpz.onrender.com/categorias', {
+    const response = await fetch(`${BASE_URL}/categorias`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`,
+        'Authorization': `Token ${API_TOKEN}`,
       },
     });
 
@@ -88,13 +91,13 @@ export const listarCategorias = async (token) => {
   }
 };
 
-export const crearDescuento = async (descuentoData, token) => {
+export const crearDescuento = async (descuentoData) => {
   try {
-    const response = await fetch('https://practica-django-fxpz.onrender.com/descuentos', {
+    const response = await fetch(`${BASE_URL}/descuentos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`,
+        'Authorization': `Token ${API_TOKEN}`,
       },
       body: JSON.stringify(descuentoData),
     });
@@ -111,13 +114,13 @@ export const crearDescuento = async (descuentoData, token) => {
   }
 };
 
-export const listarDescuentos = async (token) => {
+export const listarDescuentos = async () => {
   try {
-    const response = await fetch('https://practica-django-fxpz.onrender.com/descuentos', {
+    const response = await fetch(`${BASE_URL}/descuentos`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`,
+        'Authorization': `Token ${API_TOKEN}`,
       },
     });
 
