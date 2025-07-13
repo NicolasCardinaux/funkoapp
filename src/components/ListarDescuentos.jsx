@@ -52,12 +52,14 @@ const ListarDescuentos = () => {
                     <table className='tabla'>
                         <thead>
                             <tr>
+                                <th>Nombre</th>
                                 <th>Porcentaje</th>
                             </tr>
                         </thead>
                         <tbody>
                             {descuentosFiltrados.map((descuento) => (
                                 <tr key={descuento.idDescuento}>
+                                    <td>{descuento.nombre}</td>
                                     <td>{descuento.porcentaje}</td>
                                 </tr>
                             ))}
