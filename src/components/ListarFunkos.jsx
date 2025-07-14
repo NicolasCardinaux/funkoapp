@@ -55,8 +55,9 @@ const ListarFunkos = () => {
             <thead>
               <tr>
                 <th>Nombre</th>
-                <th>Precio</th>
                 <th>Stock</th>
+                <th>Precio</th>
+                <th>Categoría</th>
                 <th>Brillante</th>
               </tr>
             </thead>
@@ -64,8 +65,9 @@ const ListarFunkos = () => {
               {funkosFiltrados.map((funko) => (
                 <tr key={funko.idFunko}>
                   <td>{funko.nombre}</td>
-                  <td>${funko.precio.toFixed(2)}</td>
                   <td>{funko.stock}</td>
+                  <td>${funko.precio.toFixed(2)}</td>
+                  <td>{funko.categoría[0]?.nombre || 'No tiene'}</td>
                   <td>{funko.is_backlight ? 'Sí' : 'No'}</td>
                 </tr>
               ))}
