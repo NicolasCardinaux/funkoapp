@@ -69,7 +69,8 @@ body {
     font-size: 14px;
 }
 
-.tabla td:nth-child(1) {
+.tabla td:nth-child(1),
+.tabla td:nth-child(4) {
     text-transform: capitalize;
 }
 
