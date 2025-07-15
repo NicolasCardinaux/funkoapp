@@ -6,6 +6,7 @@ import CrearCategoria from './components/CrearCategoria';
 import ListarCategorias from './components/ListarCategorias';
 import CrearDescuento from './components/CrearDescuento';
 import ListarDescuentos from './components/ListarDescuentos.jsx'
+import ListarVentas from './components/ListarVentas.jsx';
 import './App.css';
 
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="/listar-categorias" element={<ListarCategorias />} />
             <Route path="/crear-descuento" element={<CrearDescuento />} />
             <Route path="/listar-descuentos" element={<ListarDescuentos />} />
+            <Route path="/listar-ventas" element={<ListarVentas />} />
           </Routes>
         </div>
       </div>
