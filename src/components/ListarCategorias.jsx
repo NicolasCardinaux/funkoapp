@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { listarCategorias } from "../utils/api";
-import '../styles/list.css';
 
 const ListarCategorias = () => {
 

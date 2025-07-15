@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { crearDescuento } from "../utils/api";
-import "../styles/form.css";
 
 const CrearDescuento = () => {
     const [descuento, setDescuento] = useState({

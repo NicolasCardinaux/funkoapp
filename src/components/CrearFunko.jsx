@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { crearFunko, listarCategorias } from '../utils/api';
-import '../styles/form.css';
 
 const CrearFunko = () => {
   const [categorias, setCategorias] = useState([]);

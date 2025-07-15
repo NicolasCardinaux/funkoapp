@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { listarDescuentos } from '../utils/api';
-import '../styles/list.css';
 
 const ListarDescuentos = () => {
     const [descuentos, setDescuentos] = useState([]);
@@ -57,7 +56,7 @@ const ListarDescuentos = () => {
                         <tbody>
                             {descuentosFiltrados.map((descuento) => (
                                 <tr key={descuento.idDescuento}>
-                                    <td>{descuento.nombre}</td>
+                                    <td>{descuento.nombre || '-'}</td>
                                     <td>{descuento.porcentaje}</td>
                                 </tr>
                             ))}

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { listarFunkos } from '../utils/api';
-import '../styles/list.css';
 
 const ListarFunkos = () => {
   const [funkos, setFunkos] = useState([]);
