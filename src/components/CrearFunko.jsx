@@ -124,7 +124,7 @@ const CrearFunko = () => {
             <option value="">Seleccionar categoría</option>
             {categorias.map((categoria) => (
               <option key={categoria.idCategoria} value={categoria.idCategoria}>
-                {categoria.nombre}
+                {categoria.nombre.charAt(0).toUpperCase() + categoria.nombre.slice(1)}
               </option>
             ))}
           </select>

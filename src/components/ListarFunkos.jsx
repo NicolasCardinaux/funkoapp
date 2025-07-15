@@ -67,7 +67,7 @@ const ListarFunkos = () => {
                   <td>{funko.nombre}</td>
                   <td>{funko.stock}</td>
                   <td>${funko.precio.toFixed(2)}</td>
-                  <td>{funko.categoría[0]?.nombre || 'No tiene'}</td>
+                  <td>{funko.categoría[0]?.nombre || '-'}</td>
                   <td>{funko.is_backlight ? 'Sí' : 'No'}</td>
                 </tr>
               ))}
