@@ -3,7 +3,6 @@
     background: #fff;
     padding: 20px;
     margin: auto;
-    position: absolute;
     border: none;
     outline: none;
 }
@@ -23,6 +22,7 @@ h2 {
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 }
 
 label {
