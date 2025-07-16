@@ -25,7 +25,8 @@ const ListarDescuentos = () => {
     };
 
     const descuentosFiltrados = descuentos.filter((descuento) =>
-        descuento.porcentaje.toString().startsWith(busqueda)
+        descuento.porcentaje.toString().startsWith(busqueda) ||
+        descuento.nombre?.toLowerCase().includes(busqueda.toLowerCase())
     );
 
     return (
