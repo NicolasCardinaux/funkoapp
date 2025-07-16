@@ -17,28 +17,25 @@ export default function Home() {
                     const result = await listarFunkos();
                     if (result.success) {
                         const funkos = result.data.funkos || [];
-                        const totalFunkos = funkos.length;
-                        const outOfStock = funkos.filter(funko => funko.stock === 0).length;
-
                         setStats({
-                            totalFunkos,
-                            outOfStock,
-                            loading: false,
-                            error: null
+                        totalFunkos: funkos.length,
+                        outOfStock: funkos.filter(funko => funko.stock === 0).length,
+                        loading: false,
+                        error: null
                         });
                     } else {
-                        setStats({
-                            ...stats,
+                        setStats(prev => ({
+                            ...prev,
                             loading: false,
                             error: result.message || "Error al cargar los funkos"
-                        });
+                        }));
                     }
                 } catch (error) {
-                    setStats({
-                        ...stats,
+                    setStats(prev => ({
+                        ...prev,
                         loading: false,
                         error: "Error de conexión: " + error.message
-                    });
+                    }));
                 }
             }
         fetchFunkoStats();
