@@ -30,42 +30,44 @@ const ListarDescuentos = () => {
     );
 
     return (
-        <div className='listar'>
-            <h2>Listar Descuentos</h2>
+      <div className="listar">
+        <h2>Listar Descuentos</h2>
 
-            <input
-                type='text'
-                placeholder='Buscar Descuento...'
-                value={busqueda}
-                onChange={handleBusqueda}
-                className='input-busqueda'
-            />
-
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-
-            {descuentos.length === 0 ? (
-                <p>No hay descuentos disponibles.</p>
-            ) : (
-                <div className='tabla-container'>
-                    <table className='tabla'>
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Porcentaje</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {descuentosFiltrados.map((descuento) => (
-                                <tr key={descuento.idDescuento}>
-                                    <td>{descuento.nombre || '-'}</td>
-                                    <td>{descuento.porcentaje}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
+        <div className="filtros-container">
+          <input
+            type="text"
+            placeholder="Buscar Descuento..."
+            value={busqueda}
+            onChange={handleBusqueda}
+            className="input-busqueda"
+          />
         </div>
+
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        {descuentos.length === 0 ? (
+          <p>No hay descuentos disponibles.</p>
+        ) : (
+          <div className="tabla-container">
+            <table className="tabla">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Porcentaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                {descuentosFiltrados.map((descuento) => (
+                  <tr key={descuento.idDescuento}>
+                    <td>{descuento.nombre || "-"}</td>
+                    <td>{descuento.porcentaje}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     );
 };
 

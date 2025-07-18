@@ -33,13 +33,15 @@ const ListarCategorias = () => {
         <div className="listar">
             <h2>Listar Categorías</h2>
 
-            <input
-                type="text"
-                placeholder="Buscar Categoría..."
-                value={busqueda}
-                onChange={handleBusqueda}
-                className="input-busqueda"
-            />
+            <div className="filtros-container">
+                <input
+                    type="text"
+                    placeholder="Buscar Categoría..."
+                    value={busqueda}
+                    onChange={handleBusqueda}
+                    className="input-busqueda"
+                />
+            </div>
 
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
