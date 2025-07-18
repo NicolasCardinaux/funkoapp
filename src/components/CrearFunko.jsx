@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { crearFunko, listarCategorias } from '../utils/api';
+import { useEffect, useState, useRef } from 'react';
+import { crearFunko, listarCategorias, subirImagen } from '../utils/api';
 
 const CrearFunko = () => {
   const [categorias, setCategorias] = useState([]);
@@ -9,11 +9,47 @@ const CrearFunko = () => {
     is_backlight: false,
     stock: 0,
     precio: 0,
+    imagen: null,
     categoría: []
   });
 
+  const [imagenArchivo, setImagenArchivo] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleImagenChange = (e) => {
+    const archivo = e.target.files[0];
+    if (archivo) {
+      setImagenArchivo(archivo);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(archivo);
+    }
+    setFunko(prev => ({
+      ...prev,
+      imagen: null
+    }));
+
+  };
+
+  const limpiarImagen = () => {
+    setImagenArchivo(null);
+    setPreviewUrl(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    if (name === "imagen") {
+      return;
+    }
+
     if (name === "categoría") {
       setFunko({
         ...funko,
@@ -29,20 +65,46 @@ const CrearFunko = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await crearFunko(funko);
 
-    if (result.success) {
+    let idImagen = null;
+
+    if (imagenArchivo) {
+      const resultado = await subirImagen(imagenArchivo);
+
+      if (resultado.success) {
+        idImagen = resultado.data.idImagen;
+      } else {
+        alert(`Error al subir imagen: ${resultado.message}`);
+        return;
+      }
+    }
+
+    const datosParaEnviar = {
+      ...funko,
+      imagen: idImagen ? idImagen : null,
+    };
+
+    const resultadoFunko = await crearFunko(datosParaEnviar);
+
+    if (resultadoFunko.success) {
       alert("Funko creado exitosamente!");
+
       setFunko({
         nombre: "",
         descripción: "",
         is_backlight: false,
         stock: 0,
         precio: 0,
-        categoría: []
+        imagen: null,
+        categoría: [],
       });
+      setImagenArchivo(null);
+      setPreviewUrl(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     } else {
-      alert(`Error: ${result.message}`);
+      alert(`Error: ${resultadoFunko.message}`);
     }
   };
 
@@ -123,7 +185,8 @@ const CrearFunko = () => {
             <option value="">Seleccionar categoría</option>
             {categorias.map((categoria) => (
               <option key={categoria.idCategoria} value={categoria.idCategoria}>
-                {categoria.nombre.charAt(0).toUpperCase() + categoria.nombre.slice(1)}
+                {categoria.nombre.charAt(0).toUpperCase() +
+                  categoria.nombre.slice(1)}
               </option>
             ))}
           </select>
@@ -137,6 +200,33 @@ const CrearFunko = () => {
             checked={funko.is_backlight}
             onChange={handleChange}
           />
+        </div>
+
+        <div className="form-group">
+          <label>Imagen:</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImagenChange}
+            ref={fileInputRef}
+          />
+
+          {previewUrl && (
+            <div className="imagen-preview">
+              <img
+                src={previewUrl}
+                alt="Previsualización"
+                style={{ maxWidth: "200px" }}
+              />
+              <button
+                type="button"
+                onClick={limpiarImagen}
+                className="btn-eliminar-imagen"
+              >
+                x
+              </button>
+            </div>
+          )}
         </div>
 
         <button className="btn-crear" type="submit">

@@ -3,6 +3,8 @@ const API_TOKEN = process.env.REACT_APP_API_TOKEN;
 
 export const crearFunko = async (funkoData) => {
   try {
+    console.log("Creando funko con datos:", funkoData);
+    
     const response = await fetch(`${BASE_URL}/funkos`, {
       method: 'POST',
       headers: {
@@ -12,14 +14,19 @@ export const crearFunko = async (funkoData) => {
       body: JSON.stringify(funkoData),
     });
 
+    console.log("Respuesta al crear funko:", response);
+
     if (response.status === 201) {
       const data = await response.json();
+      console.log("Funko creado exitosamente. Datos:", data);
       return { success: true, data };
     } else {
       const errorData = await response.json();
+      console.error("Error al crear funko:", errorData);
       return { success: false, message: errorData.message };
     }
   } catch (error) {
+    console.error("Excepción al crear funko:", error);
     return { success: false, message: `Error en la solicitud: ${error.message}` };
   }
 };
@@ -155,5 +162,40 @@ export const listarVentas = async () => {
     }
   } catch (error) {
     return { success: false, message: `Error en la solicitud: ${error.message}`};
+  }
+};
+
+export const subirImagen = async (archivo) => {
+  const formData = new FormData();
+  formData.append('imagen', archivo);
+
+  try {
+    console.log("Subiendo imagen...");
+    const response = await fetch(`${BASE_URL}/imagenes/`, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Authorization': `Token ${API_TOKEN}`,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+
+      const idImagen = data.Imagen.idImagen;
+      
+      return { 
+        success: true, 
+        data: {
+          idImagen: idImagen,
+          ...data.Imagen
+        } 
+      };
+    } else {
+      const errorData = await response.json();
+      return { success: false, message: errorData.message };
+    }
+  } catch (error) {
+    return { success: false, message: `Error en la solicitud: ${error.message}` };
   }
 };
