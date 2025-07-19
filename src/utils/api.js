@@ -209,11 +209,17 @@ export const eliminarFunko = async (idFunko) => {
         'Authorization': `Token ${API_TOKEN}`,
       },
     });
-    if (response.status === 204) {
+    if (response.status === 204 || response.status === 200) {
       return { success: true, message: 'Funko eliminado exitosamente.' };
+    } else if (response.status === 404) {
+      return { success: false, message: 'Funko no encontrado' };
     } else {
-      const errorData = await response.json();
-      return { success: false, message: errorData.message };
+      try {
+        const errorData = await response.json();
+        return { success: false, message: errorData.message || `Error ${response.status}` };
+      } catch {
+        return { success: false, message: `Error ${response.status}: ${response.statusText}` };
+      }
     }
   } catch (error) {
     return { success: false, message: `Error en la solicitud: ${error.message}`};
