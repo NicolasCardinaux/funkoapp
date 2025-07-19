@@ -10,29 +10,31 @@ const ListarFunkos = () => {
   const [eliminando, setEliminando] = useState(false);
   const [idEliminando, setIdEliminando] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await listarFunkos();
+  const fetchData = async () => {
+    try {
+      const result = await listarFunkos();
 
-        if (result.success) {
-          setFunkos(result.data.funkos);
-        } else {
-          setError(result.message || "Error al cargar funkos");
-        }
-
-        const catResult = await listarCategorias();
-
-        if (catResult.success) {
-          setCategorias(catResult.data.Categorias)
-        } else {
-          setError(prev => prev || catResult.message || "Error al cargar categorías");
-        }
-      } catch (error) {
-        setError("Error de conexión: " + error.message);
+      if (result.success) {
+        setFunkos(result.data.funkos);
+      } else {
+        setError(result.message || "Error al cargar funkos");
       }
-    };
 
+      const catResult = await listarCategorias();
+
+      if (catResult.success) {
+        setCategorias(catResult.data.Categorias);
+      } else {
+        setError(
+          (prev) => prev || catResult.message || "Error al cargar categorías"
+        );
+      }
+    } catch (error) {
+      setError("Error de conexión: " + error.message);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -64,17 +66,21 @@ const ListarFunkos = () => {
 
         if (result.success) {
           setFunkos(prevFunkos => prevFunkos.filter(funko => funko.idFunko !== idFunko));
+
+          setTimeout(() => {
+            fetchData();
+          }, 500);
         } else {
           setError(result.message || "Error al eliminar el funko");
         }
       } catch (error) {
         setError("Error al eliminar el funko:" + error.message);
       } finally {
-        setEliminando(false);
-        setIdEliminando(null);
+          setEliminando(false);
+          setIdEliminando(null);
+        }
       }
-    }
-  };
+    };
 
   return (
     <div className="listar">
@@ -119,6 +125,7 @@ const ListarFunkos = () => {
                 <th>Precio</th>
                 <th>Categoría</th>
                 <th>Brillante</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
