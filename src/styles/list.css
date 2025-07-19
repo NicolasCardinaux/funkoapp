@@ -107,6 +107,54 @@ body {
     margin-bottom: 0;
 }
 
+.error-mensaje {
+    color: red;
+    margin-bottom: 15px;
+}
+
+.acciones-celda {
+    text-align: center;
+    width: 80px;
+}
+
+.btn-eliminar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.btn-eliminar:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-eliminar:hover:not(:disabled) {
+    background-color: #f5f5f5;
+}
+
+.icono-basura {
+    width: 18px;
+    height: 18px;
+    fill: #555;
+    transition: fill 0.2s;
+}
+
+.btn-eliminar:hover:not(:disabled) .icono-basura {
+    fill: #ff3333;
+}
+
+tr.eliminando {
+    opacity: 0.5;
+    background-color: #ffe6e6;
+    transition: opacity 0.3s ease;
+}
+
 @media (max-width: 768px) {
     .listar {
         width: 95%;

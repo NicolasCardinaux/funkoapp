@@ -199,3 +199,23 @@ export const subirImagen = async (archivo) => {
     return { success: false, message: `Error en la solicitud: ${error.message}` };
   }
 };
+
+export const eliminarFunko = async (idFunko) => {
+  try {
+    const response = await fetch(`${BASE_URL}/funkos/${idFunko}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${API_TOKEN}`,
+      },
+    });
+    if (response.status === 204) {
+      return { success: true, message: 'Funko eliminado exitosamente.' };
+    } else {
+      const errorData = await response.json();
+      return { success: false, message: errorData.message };
+    }
+  } catch (error) {
+    return { success: false, message: `Error en la solicitud: ${error.message}`};
+  }
+};
