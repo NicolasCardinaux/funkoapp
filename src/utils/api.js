@@ -225,3 +225,56 @@ export const eliminarFunko = async (idFunko) => {
     return { success: false, message: `Error en la solicitud: ${error.message}`};
   }
 };
+
+export const eliminarCategoria = async (idCategoria) => {
+  try {
+    const response = await fetch(`${BASE_URL}/categorias/${idCategoria}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${API_TOKEN}`,
+      }
+    });
+    if (response.status === 204 || response.status === 200) {
+      return { success: true, message: 'Categoría eliminada exitosamente.' };
+    } else if (response.status === 404) {
+      return { success: false, message: 'Categoría no encontrada' };
+    } else {
+      try {
+        const errorData = await response.json();
+        return { success: false, message: errorData.message || `Error ${response.status}` };
+      } catch {
+        return { success: false, message: `Error ${response.status}: ${response.statusText}` };
+      }
+    }
+  } catch (error) {
+    return { success: false, message: `Error en la solicitud: ${error.message}` };
+  }
+};
+
+export const eliminarDescuento = async (idDescuento) => {
+  try {
+    const response = await fetch(`${BASE_URL}/descuentos/${idDescuento}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${API_TOKEN}`,
+      },
+    });
+    
+    if (response.status === 204 || response.status === 200) {
+      return { success: true, message: 'Descuento eliminado exitosamente.' };
+    } else if (response.status === 404) {
+      return { success: false, message: 'Descuento no encontrado' };
+    } else {
+      try {
+        const errorData = await response.json();
+        return { success: false, message: errorData.message || `Error ${response.status}` };
+      } catch {
+        return { success: false, message: `Error ${response.status}: ${response.statusText}` };
+      }
+    }
+  } catch (error) {
+    return { success: false, message: `Error en la solicitud: ${error.message}` };
+  }
+};
