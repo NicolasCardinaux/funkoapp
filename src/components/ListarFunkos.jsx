@@ -133,7 +133,9 @@ const ListarFunkos = () => {
                 <tr
                   key={funko.idFunko}
                   className={
-                    eliminando && idEliminando === funko.idFunko ? "eliminando" : ""
+                    eliminando && idEliminando === funko.idFunko
+                      ? "eliminando"
+                      : ""
                   }
                 >
                   <td>{funko.nombre}</td>
