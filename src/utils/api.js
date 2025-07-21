@@ -131,7 +131,7 @@ export const listarDescuentos = async () => {
       },
     });
 
-    if (response.status === 200) {
+    if (response.ok) {
       const data = await response.json();
       return { success: true, data };
     } else {
@@ -273,6 +273,29 @@ export const eliminarDescuento = async (idDescuento) => {
       } catch {
         return { success: false, message: `Error ${response.status}: ${response.statusText}` };
       }
+    }
+  } catch (error) {
+    return { success: false, message: `Error en la solicitud: ${error.message}` };
+  }
+};
+
+export const asignarDescuentoAFunko = async (descuentoData) => {
+  try {
+    const response = await fetch(`${BASE_URL}/funkodescuentos`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${API_TOKEN}`,
+      },
+      body: JSON.stringify(descuentoData),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return { success: true, data };
+    } else {
+      const errorData = await response.json();
+      return { success: false, message: errorData.message };
     }
   } catch (error) {
     return { success: false, message: `Error en la solicitud: ${error.message}` };
