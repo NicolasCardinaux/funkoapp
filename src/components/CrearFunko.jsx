@@ -1,8 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
-import { crearFunko, listarCategorias, subirImagen } from '../utils/api';
+import { asignarDescuentoAFunko, crearFunko, listarCategorias, listarDescuentos, subirImagen } from '../utils/api';
 
 const CrearFunko = () => {
   const [categorias, setCategorias] = useState([]);
+  const [descuentos, setDescuentos] = useState([]);
+  const [descuentoSeleccionado, setDescuentoSeleccionado] = useState('');
+  const [fechaExpiracion, setFechaExpiracion] = useState('');
   const [funko, setFunko] = useState({
     nombre: "",
     descripción: "",
@@ -84,28 +87,60 @@ const CrearFunko = () => {
       imagen: idImagen ? idImagen : null,
     };
 
+    if (descuentoSeleccionado) {
+        const hoy = new Date();
+        const fechaSeleccionada = new Date(fechaExpiracion);
+
+        if (fechaSeleccionada < hoy) {
+          alert("La fecha de expiración debe ser posterior a la fecha actual.");
+          return;
+        }
+
+        if (isNaN(fechaSeleccionada.getTime())) {
+          alert("Por favor, seleccione una fecha válida.");
+          return;
+        }
+      }
+
     const resultadoFunko = await crearFunko(datosParaEnviar);
 
     if (resultadoFunko.success) {
-      alert("Funko creado exitosamente!");
 
-      setFunko({
-        nombre: "",
-        descripción: "",
-        is_backlight: false,
-        stock: 0,
-        precio: 0,
-        imagen: null,
-        categoría: [],
-      });
-      setImagenArchivo(null);
-      setPreviewUrl(null);
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
+        if (descuentoSeleccionado) {
+          const descuentoData = {
+            funko: resultadoFunko.data.Funko.idFunko,
+            descuento: parseInt(descuentoSeleccionado),
+            fecha_inicio: new Date().toISOString().split('T')[0],
+            fecha_expiracion: fechaExpiracion
+          };
+          const resultadoDescuento = await asignarDescuentoAFunko(descuentoData);
+          if (!resultadoDescuento.success) {
+            console.log("Datos para descuento:", descuentoData);
+            alert(`Error al asignar descuento: ${resultadoDescuento.message}`);
+          }
+        }
+        alert ("Funko creado exitosamente!");
+
+        setFunko({
+          nombre: "",
+          descripción: "",
+          is_backlight: false,
+          stock: 0,
+          precio: 0,
+          imagen: null,
+          categoría: [],
+        });
+        setImagenArchivo(null);
+        setPreviewUrl(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+
+        setDescuentoSeleccionado('');
+        setFechaExpiracion('');
+      } else {
+        alert(`Error al crear funko: ${resultadoFunko.message}`);
       }
-    } else {
-      alert(`Error: ${resultadoFunko.message}`);
-    }
   };
 
   useEffect(() => {
@@ -124,7 +159,23 @@ const CrearFunko = () => {
         setCategorias([]);
       }
     };
+
+    const fetchDescuentos = async () => {
+      try {
+        const result = await listarDescuentos();
+
+        if (result.success) {
+          setDescuentos(result.data.Descuentos || []);
+        } else {
+          console.error("Error al obtener descuentos:", result.message);
+        }
+      } catch (error) {
+        console.error("Error en la petición:", error);
+      }
+    };
+
     fetchCategorias();
+    fetchDescuentos();
   }, []);
 
   return (
@@ -228,6 +279,34 @@ const CrearFunko = () => {
             </div>
           )}
         </div>
+
+        <div className="form-group">
+          <label>Descuento (opcional):</label>
+          <select
+            value={descuentoSeleccionado}
+            onChange={(e) => setDescuentoSeleccionado(e.target.value)}
+          >
+            <option value="">Sin descuento</option>
+            {descuentos.map((descuento) => (
+              <option key={descuento.idDescuento} value={descuento.idDescuento}>
+                {descuento.nombre} ({descuento.porcentaje}%)
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {descuentoSeleccionado && (
+          <div className="form-group">
+            <label>Fecha de expiración del descuento:</label>
+            <input
+              type="date"
+              value={fechaExpiracion}
+              onChange={(e) => setFechaExpiracion(e.target.value)}
+              min={new Date().toISOString().split("T")[0]} // Mínimo hoy
+              required
+            />
+          </div>
+        )}
 
         <button className="btn-crear" type="submit">
           Crear
