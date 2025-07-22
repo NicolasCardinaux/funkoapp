@@ -22,7 +22,7 @@ function App() {
 
     if (!token) {
       // If no token, redirect to the main frontend's login page
-      window.location.href = "https://importfunco.vercel.app/login";
+      window.location.href = "https://importfunko.vercel.app/login";
       return;
     }
 
@@ -44,7 +44,7 @@ function App() {
       .then((user) => {
         if (!user.is_staff) {
           // Not an admin, redirect back to the main frontend
-          window.location.href = "https://importfunco.vercel.app";
+          window.location.href = "https://importfunko.vercel.app";
         } else {
           // If it's an admin, proceed
           setIsAuthenticatedAdmin(true);
@@ -54,7 +54,7 @@ function App() {
       .catch((error) => {
         console.error("Error validating token:", error);
         // If token validation fails, redirect to the main frontend's login
-        window.location.href = "https://importfunco.vercel.app/login";
+        window.location.href = "https://importfunko.vercel.app/login";
       });
   }, []); // Run only once on component mount
 
@@ -107,7 +107,7 @@ function App() {
                 <h2>Acceso Denegado o Página No Encontrada</h2>
                 <p>No tienes permiso para acceder a esta página o la página no existe.</p>
                 <button
-                  onClick={() => window.location.href = "https://importfunco.vercel.app"}
+                  onClick={() => window.location.href = "https://importfunko.vercel.app"}
                   style={{
                     padding: '10px 20px',
                     marginTop: '20px',
