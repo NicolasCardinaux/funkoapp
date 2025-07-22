@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // <-- Importar useState y useEffect
+import React, { useEffect, useState } from "react"; // Import useState
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Sidebar from './components/Sidebar';
@@ -7,85 +7,78 @@ import ListarFunkos from './components/ListarFunkos';
 import CrearCategoria from './components/CrearCategoria';
 import ListarCategorias from './components/ListarCategorias';
 import CrearDescuento from './components/CrearDescuento';
-import ListarDescuentos from './components/ListarDescuentos.jsx';
+import ListarDescuentos from './components/ListarDescuentos.jsx'
 import ListarVentas from './components/ListarVentas.jsx';
 import './App.css';
 
-// La URL de tu backend para verificar el token y obtener datos del usuario
-const API_VERIFY_URL = "https://practica-django-fxpz.onrender.com/usuarios/login"; // Ajusta esta URL si tienes un endpoint específico para verificar
-
-
 function App() {
-  // Estados para manejar la autorización
-  const [isLoading, setIsLoading] = useState(true);
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isAuthenticatedAdmin, setIsAuthenticatedAdmin] = useState(false); // New state for admin authentication
 
   useEffect(() => {
-    // 1. Buscamos el token en la URL
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
+    const backendUrl = "https://practica-django-fxpz.onrender.com"; // Your backend URL
 
     if (!token) {
-      // Si no hay token, lo redirigimos al login del front principal
+      // If no token, redirect to the main frontend's login page
       window.location.href = "https://importfunco.vercel.app/login";
-      return; // Detenemos la ejecución del efecto
+      return;
     }
 
-    // 2. Si hay token, lo validamos contra el backend
-    fetch(API_VERIFY_URL, { // Asumimos que el endpoint de login puede usarse para verificar datos con un token
-      method: 'GET', // O el método que corresponda para obtener datos del usuario
+    // Save the token for later use
+    localStorage.setItem("token", token);
+
+    // Validate the token by calling the API
+    fetch(`${backendUrl}/api/user/`, { // Adjust this endpoint if your user details API is different
       headers: {
-        'Authorization': `Token ${token}`, // O 'Bearer ${token}' según tu backend
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${token}`, // Use Bearer token for authorization
       },
     })
-    .then(res => {
-      if (!res.ok) {
-        throw new Error("Token inválido o expirado");
-      }
-      return res.json();
-    })
-    .then(userData => {
-      // 3. Verificamos si el usuario es staff
-      if (userData.is_staff) {
-        // ¡Autorizado! Guardamos el token y permitimos el acceso
-        localStorage.setItem("admin_token", token);
-        setIsAuthorized(true);
-      } else {
-        // No es admin, lo redirigimos a la home del sitio principal
-        alert("Acceso denegado. No tienes permisos de administrador.");
-        window.location.href = "https://importfunco.vercel.app/";
-      }
-    })
-    .catch(error => {
-      // Si el fetch falla o el token es malo, lo redirigimos al login
-      console.error("Error de validación:", error);
-      window.location.href = "https://importfunco.vercel.app/login";
-    })
-    .finally(() => {
-      // 4. Terminamos la carga
-      setIsLoading(false);
-    });
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Token inválido o error en la respuesta del servidor");
+        }
+        return res.json();
+      })
+      .then((user) => {
+        if (!user.is_staff) {
+          // Not an admin, redirect back to the main frontend
+          window.location.href = "https://importfunco.vercel.app";
+        } else {
+          // If it's an admin, proceed
+          setIsAuthenticatedAdmin(true);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error validating token:", error);
+        // If token validation fails, redirect to the main frontend's login
+        window.location.href = "https://importfunco.vercel.app/login";
+      });
+  }, []); // Run only once on component mount
 
-  }, []); // El array vacío asegura que este efecto se ejecute solo una vez
-
-  // --- Lógica de renderizado condicional ---
-
-  if (isLoading) {
+  if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#282c34', color: 'white' }}>
-        <h1>Verificando acceso... 🔐</h1>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        fontSize: '24px',
+        color: '#333'
+      }}>
+        Cargando panel de administración...
       </div>
     );
   }
 
-  if (!isAuthorized) {
-    // Aunque el useEffect ya redirige, esto es una capa extra de seguridad.
-    // No renderiza nada si no está autorizado.
-    return null; 
+  if (!isAuthenticatedAdmin) {
+    // This case should ideally not be reached if the redirects work,
+    // but it's a fallback to prevent rendering admin content if not authenticated.
+    return null;
   }
 
-  // Si pasó todas las verificaciones, muestra la app de admin
   return (
     <Router>
       <div className="app-container">
@@ -100,6 +93,36 @@ function App() {
             <Route path="/crear-descuento" element={<CrearDescuento />} />
             <Route path="/listar-descuentos" element={<ListarDescuentos />} />
             <Route path="/listar-ventas" element={<ListarVentas />} />
+            {/* Add a catch-all route for unauthorized access or non-existent pages */}
+            <Route path="*" element={
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                minHeight: '80vh',
+                fontSize: '24px',
+                color: '#e74c3c'
+              }}>
+                <h2>Acceso Denegado o Página No Encontrada</h2>
+                <p>No tienes permiso para acceder a esta página o la página no existe.</p>
+                <button
+                  onClick={() => window.location.href = "https://importfunco.vercel.app"}
+                  style={{
+                    padding: '10px 20px',
+                    marginTop: '20px',
+                    backgroundColor: '#3498db',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    fontSize: '18px'
+                  }}
+                >
+                  Volver al Inicio
+                </button>
+              </div>
+            } />
           </Routes>
         </div>
       </div>
