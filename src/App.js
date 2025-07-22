@@ -16,8 +16,8 @@ function App() {
   const [isAuthenticatedAdmin, setIsAuthenticatedAdmin] = useState(false); // New state for admin authentication
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get("token");
+    // ✅ Obtenemos el token de localStorage en lugar de la URL
+    const token = localStorage.getItem("token");
     const backendUrl = "https://practica-django-fxpz.onrender.com"; // Your backend URL
 
     if (!token) {
@@ -26,13 +26,13 @@ function App() {
       return;
     }
 
-    // Save the token for later use
-    localStorage.setItem("token", token);
+    // No necesitamos guardar el token en localStorage aquí, ya viene de ahí.
 
     // Validate the token by calling the API
     fetch(`${backendUrl}/api/user/`, { // Adjust this endpoint if your user details API is different
       headers: {
-        Authorization: `Bearer ${token}`, // Use Bearer token for authorization
+        // ✅ Usamos "Token" en lugar de "Bearer" para Django REST Token Auth
+        Authorization: `Token ${token}`,
       },
     })
       .then((res) => {
