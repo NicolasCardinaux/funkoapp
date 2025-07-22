@@ -16,47 +16,35 @@ function App() {
   const [isAuthenticatedAdmin, setIsAuthenticatedAdmin] = useState(false); // New state for admin authentication
 
   useEffect(() => {
-    // ✅ Obtenemos el token de localStorage en lugar de la URL
+    // ✅ Obtenemos el token y el estado isStaff directamente de localStorage
     const token = localStorage.getItem("token");
-    const backendUrl = "https://practica-django-fxpz.onrender.com"; // Your backend URL
+    const isStaff = localStorage.getItem("isStaff") === 'true'; // Convertir a booleano
 
     if (!token) {
-      // If no token, redirect to the main frontend's login page
+      // Si no hay token, redirigir al login del frontend principal
       window.location.href = "https://importfunko.vercel.app/login";
       return;
     }
 
-    // No necesitamos guardar el token en localStorage aquí, ya viene de ahí.
+    // Si el token existe pero el usuario NO es staff, redirigir al frontend principal
+    if (!isStaff) {
+      window.location.href = "https://importfunko.vercel.app";
+      return;
+    }
 
-    // Validate the token by calling the API
-    fetch(`${backendUrl}/api/user/`, { // Adjust this endpoint if your user details API is different
-      headers: {
-        // ✅ Usamos "Token" en lugar de "Bearer" para Django REST Token Auth
-        Authorization: `Token ${token}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Token inválido o error en la respuesta del servidor");
-        }
-        return res.json();
-      })
-      .then((user) => {
-        if (!user.is_staff) {
-          // Not an admin, redirect back to the main frontend
-          window.location.href = "https://importfunko.vercel.app";
-        } else {
-          // If it's an admin, proceed
-          setIsAuthenticatedAdmin(true);
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        console.error("Error validating token:", error);
-        // If token validation fails, redirect to the main frontend's login
-        window.location.href = "https://importfunko.vercel.app/login";
-      });
-  }, []); // Run only once on component mount
+    // Si el token existe Y el usuario es staff, entonces autenticado como admin
+    setIsAuthenticatedAdmin(true);
+    setLoading(false);
+
+    // Ya no necesitamos hacer una llamada fetch al backend para validar is_staff aquí,
+    // ya que esa información se guarda en localStorage durante el login.
+    // La validez del token en sí se asume por la presencia en localStorage y el isStaff flag.
+    // Si el token fuera inválido/expirado, la API del backend para las operaciones
+    // del admin (CrearFunko, ListarFunkos, etc.) debería manejarlo con un 401 y
+    // el usuario eventualmente sería redirigido al login si se implementa un interceptor
+    // de errores global o un manejo de errores en cada fetch.
+
+  }, []); // Este useEffect se ejecuta solo una vez al montar el componente
 
   if (loading) {
     return (
@@ -74,8 +62,8 @@ function App() {
   }
 
   if (!isAuthenticatedAdmin) {
-    // This case should ideally not be reached if the redirects work,
-    // but it's a fallback to prevent rendering admin content if not authenticated.
+    // Esta condición debería ser alcanzada solo si las redirecciones anteriores fallan.
+    // En un flujo normal, el usuario ya habría sido redirigido.
     return null;
   }
 
